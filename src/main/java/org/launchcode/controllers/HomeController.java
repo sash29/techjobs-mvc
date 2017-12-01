@@ -13,6 +13,7 @@ import java.util.HashMap;
 public class HomeController {
 
     @RequestMapping(value = "")
+    //passes  actionChoices hashmap into index.html template to display the initial search/list menu options
     public String index(Model model) {
 
         HashMap<String, String> actionChoices = new HashMap<>();
@@ -23,5 +24,4 @@ public class HomeController {
 
         return "index";
     }
-
 }

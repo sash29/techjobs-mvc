@@ -9,13 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by LaunchCode
- */
+//Created by LaunchCode
 @Controller
 @RequestMapping(value = "list")
 public class ListController {
-
     static HashMap<String, String> columnChoices = new HashMap<>();
 
     public ListController () {
@@ -25,16 +22,15 @@ public class ListController {
         columnChoices.put("position type", "Position Type");
         columnChoices.put("all", "All");
     }
-
     @RequestMapping(value = "")
+    //passes the columnChoices hashmap to the list.html template to display the different types of lists that the user can view.
     public String list(Model model) {
 
         model.addAttribute("columns", columnChoices);
-
-        return "list";
-    }
+        return "list";}
 
     @RequestMapping(value = "values")
+    //uses the query parameter passed in as column to determine which values to fetch from JobData
     public String listColumnValues(Model model, @RequestParam String column) {
 
         if (column.equals("all")) {
@@ -48,18 +44,15 @@ public class ListController {
             model.addAttribute("column", column);
             model.addAttribute("items", items);
             return "list-column";
-        }
-
-    }
-
+        }}
     @RequestMapping(value = "jobs")
+    //uses the query parameter passed in as column to determine which values to fetch from JobData
     public String listJobsByColumnAndValue(Model model,
-            @RequestParam String column, @RequestParam String value) {
+                                           @RequestParam String column, @RequestParam String value) {
 
         ArrayList<HashMap<String, String>> jobs = JobData.findByColumnAndValue(column, value);
         model.addAttribute("title", "Jobs with " + columnChoices.get(column) + ": " + value);
         model.addAttribute("jobs", jobs);
-
         return "list-jobs";
     }
 }

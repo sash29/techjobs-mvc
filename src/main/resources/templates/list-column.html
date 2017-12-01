@@ -11,13 +11,12 @@
     <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
 
     <div th:if="${items} and ${items.size()}">
-
+        <!--links are presented in a table, and their URLs have 2 query parameter attributes: the column and the value.-->
         <table>
             <tr th:each="item, idx : ${items}" th:class="${idx.odd} ? 'odd'">
                 <td><a th:href="@{/list/jobs(column=${column},value=${item})}" th:text="${item}"></a></td>
             </tr>
         </table>
-
     </div>
 
 </div>
