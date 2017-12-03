@@ -32,24 +32,31 @@ public class SearchController {
         model.addAttribute("columns", ListController.columnChoices);
         return "search";
     }
-
     // TODO #1 - Create handler to process search request and display results
-
     @RequestMapping(value = "results", method = RequestMethod.POST)
     //uses the query parameter passed in as column to determine which values to fetch from JobData
     public String searchJobsByColumnAndValue(Model model, @RequestParam String searchType, @RequestParam String searchTerm) {
-        System.out.println(searchTerm + ":" + searchType);
-
-        if (searchType.toLowerCase().equals("all")) {
+        if (searchType.toLowerCase().equals("all")&& searchTerm != ""){
+            ArrayList<HashMap<String, String>> jobs = JobData.findByValue(searchTerm);
+            model.addAttribute("title", "Jobs with " + columnChoices.get(searchType) + ": " + searchTerm);
+            model.addAttribute("jobs", jobs);
+            System.out.println("findByValue");
+        }
+        else if (searchType.toLowerCase().equals("all") && searchTerm == "") {
             ArrayList<HashMap<String, String>> jobs = JobData.findAll();
             model.addAttribute("title", "All Jobs");
             model.addAttribute("jobs", jobs);
+            System.out.println("findAll");
         } else {
 
             ArrayList<HashMap<String, String>> jobs = JobData.findByColumnAndValue(searchType, searchTerm);
             model.addAttribute("title", "Jobs with " + columnChoices.get(searchType) + ": " + searchTerm);
             model.addAttribute("jobs", jobs);
+            System.out.println("findByColandVal");
         }
-        return "results";
+            return "results";
+        }
+
+
     }
-}
+
